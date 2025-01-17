@@ -1,4 +1,4 @@
-'''
+
 ##THIS IS FOR HISTOGRAM PLOT OF KS VALUES
 
 
@@ -23,22 +23,24 @@ plt.ylabel("Frequency")
 plt.title("Histogram of Ks Values")
 plt.grid(True)
 
+# Save the HIST plot
+plt.savefig('Scripts/histogram_plot_ks_values.png') 
+
 # Show the plot
 plt.show()
-'''
 
-##THIS IS FOR THE DENSITY AND BOX PLOTS OF KS VALUES WITH THE TAG STATUS
+
+'''##THIS IS FOR THE DENSITY AND BOX PLOTS OF KS VALUES WITH THE TAG STATUS
 
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 # Load the data from the CSV file
 data = pd.read_csv("KAKS/annotated_ks1.csv")
 
 # Check the first few rows to ensure it's loaded correctly
 print(data.head())
-
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 # Set the color palette
 sns.set_palette("Set2")
@@ -52,6 +54,9 @@ plt.title("Density Plot of Ks Values for Tag and Non-Tag Pairs", fontsize=16)
 plt.xlabel("Ks Value", fontsize=12)
 plt.ylabel("Density", fontsize=12)
 
+# Save the density plot
+plt.savefig('Scripts/density_plot_ks_values_by_tag.png') 
+
 # Create the box plot
 plt.figure(figsize=(8, 6))
 sns.boxplot(x="Tag_Status", y="Ks", data=data, palette="Set2")
@@ -61,6 +66,8 @@ plt.title("Box Plot of Ks Values for Tag and Non-Tag Pairs", fontsize=16)
 plt.xlabel("Tag Status", fontsize=12)
 plt.ylabel("Ks Value", fontsize=12)
 
-# Display the plot
-plt.show()
+# Save the box plot
+plt.savefig('Scripts/box_plot_ks_values_tag_nontag.png') 
 
+# Display the plots (optional)
+plt.show()'''
