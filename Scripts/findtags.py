@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Load the gene data from a TSV file
-gene_data = pd.read_csv("./new MCL/sorted_HIGH_merged_fam_with_header.tsv", sep="\t", header=None) #change with the high/low data
+gene_data = pd.read_csv("./new MCL/sorted_LOW_merged_fam_with_header.tsv", sep="\t", header=None) #change with the high/low data
 gene_data.columns = ["gene_id", "chromosome", "start", "end", "strand", "family"]
 
 # Initialize variables for tag identification
@@ -106,7 +106,7 @@ if current_tag and genes_in_tag >= 2:
     tags.append((current_tag, current_family, spacers_in_tag))
 
 # Write the output to a file
-with open("new MCL/tags_outputHigh1.txt", "w") as f:
+with open("new MCL/tags_outputLow1.txt", "w") as f: #change path for high/Low data
     for i, (tag_genes, family, spacers) in enumerate(tags):
         chromosome = tag_genes[0]["chromosome"]
         num_genes = len([gene for gene in tag_genes if gene["family"] == family])
@@ -142,7 +142,7 @@ for tag_genes, family, spacers in tags:
 tags_per_chromosome = pd.Series([tag[0][0]["chromosome"] for tag in tags]).value_counts()
 
 # Write all tags to the output file
-with open("new MCL/tags_outputHigh1.txt", "a") as f:
+with open("new MCL/tags_outputLow1.txt", "a") as f: #change path for high/Low data
     f.write("\nAll Tags Information:\n")
     for i, (tag_genes, family, spacers) in enumerate(tags):
         chromosome = tag_genes[0]["chromosome"]
@@ -170,14 +170,16 @@ with open("new MCL/tags_outputHigh1.txt", "a") as f:
     for chromosome, count in tags_per_chromosome.items():
         f.write(f"Chromosome: {chromosome}, Number of Tags: {count}\n")
 
-# Visualize Now
+
+#VISUALIZE
+
 
 import os
 import matplotlib.pyplot as plt
 import pandas as pd
 
 # Ensure the folder exists
-output_dir = "new MCL/plotsLOW"
+output_dir = "new MCL/plots"
 os.makedirs(output_dir, exist_ok=True)
 
 # Create a figure with 2 rows and 2 columns
@@ -214,22 +216,7 @@ for bar in bars:
     axes[1, 0].text(bar.get_x() + bar.get_width() / 2, height, f'{height:.2f}%', 
                     ha='center', va='bottom', fontsize=10, fontweight='bold')
 
-'''# ---- 4. Chromosome with the Highest Number of Tags ----
-highest_tags_chromosome = tags_per_chromosome.idxmax()
-highest_tags_value = tags_per_chromosome.max()
-axes[1, 1].bar(highest_tags_chromosome, highest_tags_value, color='orange')
-axes[1, 1].set_xlabel('Chromosome')
-axes[1, 1].set_ylabel('Number of Tags')
-axes[1, 1].set_title(f'Highest Number of Tags ({highest_tags_chromosome}: {highest_tags_value} tags)')
-
-# Adjust layout and save the combined plot
-plt.tight_layout()'''
-
-
-# ---- Additional Plot: Largest Tag per Chromosome ----
-
-
-# Calculate the largest tag per chromosome
+# ---- 4. Largest Tag per Chromosome ----
 largest_tag_per_chromosome = {}
 for tag_genes, family, spacers in tags:
     chromosome = tag_genes[0]["chromosome"]
@@ -237,23 +224,22 @@ for tag_genes, family, spacers in tags:
     if chromosome not in largest_tag_per_chromosome or gene_count > largest_tag_per_chromosome[chromosome]:
         largest_tag_per_chromosome[chromosome] = gene_count
 
-# Create a new figure for the largest tag plot
-fig2, ax2 = plt.subplots(figsize=(10, 6))
-
 # Plot the largest tag per chromosome
-ax2.bar(largest_tag_per_chromosome.keys(), largest_tag_per_chromosome.values(), color='orange')
-ax2.set_xlabel('Chromosome')
-ax2.set_ylabel('Number of Genes in Largest Tag')
-ax2.set_title('Largest Tag per Chromosome for HIGH data')
-ax2.tick_params(axis='x', rotation=45)
+axes[1, 1].bar(largest_tag_per_chromosome.keys(), largest_tag_per_chromosome.values(), color='orange')
+axes[1, 1].set_xlabel('Chromosome')
+axes[1, 1].set_ylabel('Number of Genes in Largest Tag')
+axes[1, 1].set_title('Largest Tag per Chromosome')
+axes[1, 1].tick_params(axis='x', rotation=45)
 
 # Add the number of genes on top of each bar
 for chromosome, gene_count in largest_tag_per_chromosome.items():
-    ax2.text(chromosome, gene_count + 0.1, str(gene_count), ha='center', va='bottom', fontsize=10)
+    axes[1, 1].text(chromosome, gene_count + 0.1, str(gene_count), ha='center', va='bottom', fontsize=10)
 
-# Save both the original and the new plot
-plt.savefig(f"{output_dir}/combined_plot_HIGH.png")
-plt.savefig(f"{output_dir}/largest_tag_per_chromosome.png")
+# Adjust layout for clarity
+plt.tight_layout()
 
-# Show both plots
+# Save the combined figure
+plt.savefig(f"{output_dir}/combined_plot_low.png") #change name for high / low stringent data
+
+# Show the combined plot
 plt.show()
