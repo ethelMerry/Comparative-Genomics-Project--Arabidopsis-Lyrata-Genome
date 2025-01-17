@@ -25,6 +25,5 @@ This project investigates the distribution and evolutionary dynamics of duplicat
 **Files:**
 
 * `scripts/`: Contains scripts for data processing, analysis, and visualization (e.g., BLASTP, MCL, Ks calculation, plotting scripts).
-* `data/`: Contains raw data files (e.g., protein sequences, genome annotations).
 * `results/`: Contains processed data, figures, and statistical results.
 
