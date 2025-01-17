@@ -1,7 +1,5 @@
-# Comparative-Genomics-Project--Arabidopsis-Lyrata-Genome
-Identification of Duplicated Genes and TAGs  in the Arabidopsis Lyrata Genome: Estimation of their proportion and evolutionary analysis based on Ks Values
-
 # Analysis of Gene Duplication in Arabidopsis lyrata
+Identification of Duplicated Genes and TAGs  in the Arabidopsis Lyrata Genome: Estimation of their proportion and evolutionary analysis based on Ks Values
 
 **Description:**
 
